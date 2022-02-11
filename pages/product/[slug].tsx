@@ -1,21 +1,31 @@
-import { useRouter } from 'next/router';
 import Product from '../../components/product/product';
+import { useRouter } from 'next/router'
+import useSWR from 'swr'
+
+const fetcher = async (url: string) => {
+	const res = await fetch(url)
+	const data = await res.json()
+
+	if (res.status !== 200) {
+		throw new Error(data.message)
+	}
+	return data
+}
 
 const Post = () => {
-	const router = useRouter();
-	const { slug } = router.query;
+	const { query } = useRouter()
+	const { data, error } = useSWR(
+		() => query.slug && `/api/product/${query.slug}`,
+		fetcher
+	)
+	console.log({ data })
+	if (error) return <div>{error.message}</div>
+	if (!data) return <div>Loading...</div>
 
 	return (
 		<div>
 			<Product
-				details={{
-					id: 1,
-					title: 'Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops',
-					price: 109.95,
-					description:
-						'Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday',
-					image: 'https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg'
-				}}
+				details={data}
 			/>
 		</div>
 	);

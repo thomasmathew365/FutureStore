@@ -5,30 +5,11 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import { ProductProps, Image as ImageProps } from '../../data/products-type';
 
-const props2 = {
-	id: 1,
-	title: 'Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops',
-	price: 109.95,
-	description:
-		'Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday',
-	category: "men's clothing",
-	image: 'https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg',
-	rating: {
-		rate: 3.9,
-		count: 120,
-	},
+type DetailsProps = {
+	details: ProductProps
 };
-
-interface ProductProps {
-	details: {
-		id: number;
-		title: string;
-		price: number;
-		description: string;
-		image: string;
-	};
-}
 
 const renderTrimmerTitle = (title: string) => {
 	const titleTrimmed =
@@ -40,22 +21,27 @@ const renderTrimmerTitle = (title: string) => {
 	);
 };
 
-export default function Product(props: ProductProps) {
+const getDefaultImage = (images: ImageProps[]) => {
+	return images.filter(image => image.isDefault)[0].url;
+};
+
+
+export default function Product({ details }: DetailsProps) {
 	return (
 		<Card sx={{ maxWidth: 345 }} elevation={0}>
 			{/* Image */}
 			<CardMedia
 				component="img"
-				alt={props.details.title}
+				alt={details.name}
 				height="340"
-				image="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"
+				image={getDefaultImage(details.images)}
 			/>
 			<CardContent>
 				{/* Title */}
-				{renderTrimmerTitle(props.details.title)}
+				{renderTrimmerTitle(details.name)}
 				{/* Price */}
 				<Typography gutterBottom variant="h6" component="div" align="center">
-					{`₩ ${props.details.price * 1000}`}
+					{`$ ${details.price.value}`}
 				</Typography>
 				{/* <Typography gutterBottom variant="h5" component="div">
 					Lizard
