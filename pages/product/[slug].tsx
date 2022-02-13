@@ -1,16 +1,7 @@
-import Product from '../../components/product/product';
+import Product from '../../components/Product';
 import { useRouter } from 'next/router'
 import useSWR from 'swr'
-
-const fetcher = async (url: string) => {
-	const res = await fetch(url)
-	const data = await res.json()
-
-	if (res.status !== 200) {
-		throw new Error(data.message)
-	}
-	return data
-}
+import { fetcher } from '../../utils';
 
 const Post = () => {
 	const { query } = useRouter()
@@ -18,7 +9,6 @@ const Post = () => {
 		() => query.slug && `/api/product/${query.slug}`,
 		fetcher
 	)
-	console.log({ data })
 	if (error) return <div>{error.message}</div>
 	if (!data) return <div>Loading...</div>
 

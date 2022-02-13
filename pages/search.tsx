@@ -1,43 +1,49 @@
 import type { NextPage } from 'next';
-import Link from 'next/link';
 import useSWR from 'swr'
+import { fetcher } from '../utils';
 import { ProductProps } from '../data/products-type';
-import Product from '../components/product/product';
-import CssBaseline from '@mui/material/CssBaseline';
+import Product from '../components/Product';
 import Container from '@mui/material/Container';
+import {
+	useRecoilValue
+} from 'recoil';
+import { themeState } from '../atoms';
+import { styled } from '@mui/material/styles';
 
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
+const SearchContainer = styled('div')(({ theme }) => {
+	return ({
+		backgroundColor: theme.palette.mode === 'light' ? theme.palette.background.default : theme.palette.grey['900']
+	})
+});
 
 const Products: NextPage = () => {
 
-	const { data, error } = useSWR('/api/product', fetcher)
+	const theme = useRecoilValue<'light' | 'dark'>(themeState);
+	const searchScreenBG = theme === 'light' ? 'background.default' : 'grey.900';
+	const { data, error } = useSWR('/api/product', fetcher);
 
 	if (error) return <div>Failed to load</div>
 	if (!data) return <div>Loading...</div>
 
-
 	return (
-		<div>
-
-			<h2>Product List</h2>
-			<CssBaseline />
-			<Container fixed>
-				{data.map((product: ProductProps) => (
-
-					<Link href={`/product/[slug]`} as={`/product/${product.slug}`}>
-						<a>
-
-							<Product
-								details={product}
-							/>
-						</a>
-					</Link>
+		<SearchContainer >
+			<Container maxWidth="xl" sx={{
+				bgcolor: searchScreenBG,
+				p: 5,
+			}}>
+				{data.map((product: ProductProps, k: number) => (
+					// <Link href={`/product/[slug]`} as={`/product/${product.slug}`} key={`searchitem-${k}`}>
+					// 	<a>
+					<Product
+						key={`searchitem-${k}`}
+						details={product}
+					/>
+					// 	</a>
+					// </Link>
 
 				))}
 			</Container>
-
-
-		</div>
+		</SearchContainer>
 	);
 };
 
