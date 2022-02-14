@@ -22,7 +22,7 @@ interface CartProps {
 }
 
 export default function CartItem(props: CartProps) {
-	const {productInfo, count, id} = props;
+	const { productInfo, count, id } = props;
 	const [cartValue, setCartValue] = useRecoilState(cartState);
 
 	const deleteCartItem = (id: string) => () => {
@@ -43,6 +43,7 @@ export default function CartItem(props: CartProps) {
 		setCartValue(prevState);
 	};
 
+
 	return (
 		<Box sx={{ flexGrow: 1, mb: 2, boxShadow: 2 }}>
 			<Grid container spacing={1}>
@@ -52,7 +53,7 @@ export default function CartItem(props: CartProps) {
 						alt={productInfo.name}
 						height="100"
 						image={getDefaultImage(productInfo.images)}
-            sx={{bgcolor: 'grey.400'}}
+						sx={{ bgcolor: 'grey.400' }}
 					/>
 				</Grid>
 				<Grid item xs={6}>
@@ -66,8 +67,8 @@ export default function CartItem(props: CartProps) {
 						{productInfo.name}
 					</Typography>
 					<Stack direction="row" spacing={1}>
-						<Chip label={`Color: red`} variant="outlined" />
-						<Chip label={'Size: xl'} variant="outlined" />
+						{id.split('_')[1] && <Chip label={`Color: ${id.split('_')[1]}`} variant="outlined" />}
+						{id.split('_')[2] && <Chip label={`Size: ${id.split('_')[2]}`} variant="outlined" />}
 					</Stack>
 				</Grid>
 				<Grid item xs={3}>
@@ -85,7 +86,7 @@ export default function CartItem(props: CartProps) {
 					<IconButton
 						size="large"
 						aria-label="Remove from Cart"
-            title="Remove from Cart"
+						title="Remove from Cart"
 						color="inherit"
 						onClick={deleteCartItem(id)}
 					>
@@ -102,7 +103,7 @@ export default function CartItem(props: CartProps) {
 					<IconButton
 						size="large"
 						aria-label="Remove from Cart"
-            title="Remove from Cart"
+						title="Remove from Cart"
 						color="inherit"
 						disabled={count === 1}
 						onClick={removeCartItem(id)}
@@ -114,7 +115,7 @@ export default function CartItem(props: CartProps) {
 					<IconButton
 						size="large"
 						aria-label="Add to Cart"
-            title="Add to Cart"
+						title="Add to Cart"
 						color="inherit"
 						onClick={addCartItem(id)}
 					>

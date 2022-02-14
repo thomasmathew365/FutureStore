@@ -38,5 +38,16 @@ export const setParsedCartState = (cartItem: string, cartState: Record<string, n
 }
 
 export const getDefaultImage = (images: Image[]) => {
-	return images.filter(image => image.isDefault)[0].url;
+  return images.filter(image => image.isDefault)[0].url;
 };
+
+export const chunkArray = (array: any[], chunkSize: number) => {
+  let i, j, temporary;
+  const chunk = chunkSize;
+  const finalArray = [];
+  for (i = 0, j = array.length; i < j; i += chunk) {
+    temporary = array.slice(i, i + chunk);
+    finalArray.push(temporary);
+  }
+  return finalArray;
+}

@@ -60,9 +60,10 @@ export default function CartDrawer() {
 
 	const getTotalCartPrice = () => {
 		let totalPrice = 0;
-		Object.keys(cartValue).forEach((cartItemID, k) => {
+		Object.keys(cartValue).forEach((cartItem, k) => {
+			const cartItemID = cartItem.split('_')[0];
 			const productInfo = data[_.findIndex(data, ['id', cartItemID])];
-			const cartItemCount = cartValue[cartItemID];
+			const cartItemCount = cartValue[cartItem];
 			totalPrice = totalPrice + productInfo.price.value * cartItemCount;
 		});
 		return totalPrice;
@@ -83,14 +84,15 @@ export default function CartDrawer() {
 
 	const renderCartItems = () => {
 		// Todo Parse cartValue for id, size and color
-		return Object.keys(cartValue).map((cartItemID, k) => {
+		return Object.keys(cartValue).map((cartItem, k) => {
+			const cartItemID = cartItem.split('_')[0];
 			const productInfo = data[_.findIndex(data, ['id', cartItemID])];
-			const cartItemCount = cartValue[cartItemID];
+			const cartItemCount = cartValue[cartItem];
 			return (
 				<CartItem
 					productInfo={productInfo}
 					count={cartItemCount}
-					id={cartItemID}
+					id={cartItem}
 					key={`cart-item-${k}`}
 				/>
 			);
