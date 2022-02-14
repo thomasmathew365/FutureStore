@@ -65,7 +65,7 @@ const Post = () => {
 	const renderAltImages = () => {
 		return data.images.map((image: ImageProps, k: number) => {
 			return (
-				<Grid item xs={4}>
+				<Grid item xs={4} key={k}>
 					<CardMedia
 						component="img"
 						alt={data.name}
