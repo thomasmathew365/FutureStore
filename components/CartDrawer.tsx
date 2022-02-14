@@ -73,6 +73,7 @@ export default function CartDrawer() {
 					productInfo={productInfo}
 					count={cartItemCount}
 					id={cartItemID}
+          key={`cart-item-${k}`}
 				/>
 			);
 		});
