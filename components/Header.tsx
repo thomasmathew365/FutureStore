@@ -23,7 +23,7 @@ export default function Header() {
         <Toolbar>
           <Link href={`/search`}>
             <a>
-              <StorefrontIcon />
+              {/* <StorefrontIcon /> */}
               {'Future Store'}
             </a>
           </Link>

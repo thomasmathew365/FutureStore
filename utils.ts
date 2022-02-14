@@ -1,4 +1,4 @@
-import { ProductProps } from './data/products-type';
+import { ProductProps, ImageProps } from './data/products-type';
 
 type CartProps = {
   id: string,
@@ -36,3 +36,7 @@ export const setParsedCartState = (cartItem: string, cartState: Record<string, n
   }
   return cartStateClone;
 }
+
+export const getDefaultImage = (images: ImageProps[]) => {
+	return images.filter(image => image.isDefault)[0].url;
+};

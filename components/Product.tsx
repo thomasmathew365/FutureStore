@@ -16,7 +16,7 @@ import IconButton from '@mui/material/IconButton';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { styled } from '@mui/material/styles';
-import { buildCartItem, setParsedCartState } from "../utils";
+import { buildCartItem, setParsedCartState, getDefaultImage } from "../utils";
 import Link from 'next/link';
 
 type DetailsProps = {
@@ -44,10 +44,6 @@ const renderTrimmerTitle = (title: string, typoStyles: any) => {
 			</Typography>
 		</div>
 	);
-};
-
-const getDefaultImage = (images: ImageProps[]) => {
-	return images.filter(image => image.isDefault)[0].url;
 };
 
 export default function Product({ details }: DetailsProps) {
@@ -80,7 +76,6 @@ export default function Product({ details }: DetailsProps) {
 			}
 		}}
 			elevation={5}>
-			{/* <CardActions> */}
 			<ProductActions>
 				<IconButton size="large" aria-label="Add to Cart" color="inherit"
 					onClick={() => addToCart(details)}>
@@ -90,7 +85,6 @@ export default function Product({ details }: DetailsProps) {
 					<FavoriteIcon />
 				</IconButton>
 			</ProductActions>
-			{/* </CardActions> */}
 			{/* Image */}
 			<Link href={`/product/[slug]`} as={`/product/${details.slug}`}>
 				<a>
@@ -111,7 +105,6 @@ export default function Product({ details }: DetailsProps) {
 								{`$ ${details.price.value}`}
 							</Typography>
 						</div>
-
 					</CardContent>
 				</a>
 			</Link >
