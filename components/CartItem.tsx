@@ -52,6 +52,7 @@ export default function CartItem(props: CartProps) {
 						alt={productInfo.name}
 						height="100"
 						image={getDefaultImage(productInfo.images)}
+            sx={{bgcolor: 'grey.400'}}
 					/>
 				</Grid>
 				<Grid item xs={6}>
@@ -84,6 +85,7 @@ export default function CartItem(props: CartProps) {
 					<IconButton
 						size="large"
 						aria-label="Remove from Cart"
+            title="Remove from Cart"
 						color="inherit"
 						onClick={deleteCartItem(id)}
 					>
@@ -91,7 +93,7 @@ export default function CartItem(props: CartProps) {
 					</IconButton>
 				</Grid>
 				<Grid item xs={6}>
-					<IconButton size="medium" aria-label="Add to Cart" color="inherit">
+					<IconButton size="medium" color="inherit" disableRipple>
 						<Box sx={{ color: 'text.disabled' }}>{count}</Box>
 					</IconButton>
 				</Grid>
@@ -99,7 +101,8 @@ export default function CartItem(props: CartProps) {
 				<Grid item xs={2}>
 					<IconButton
 						size="large"
-						aria-label="Add to Cart"
+						aria-label="Remove from Cart"
+            title="Remove from Cart"
 						color="inherit"
 						disabled={count === 1}
 						onClick={removeCartItem(id)}
@@ -111,6 +114,7 @@ export default function CartItem(props: CartProps) {
 					<IconButton
 						size="large"
 						aria-label="Add to Cart"
+            title="Add to Cart"
 						color="inherit"
 						onClick={addCartItem(id)}
 					>

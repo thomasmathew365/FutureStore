@@ -14,6 +14,7 @@ import * as _ from 'lodash';
 import CartItem from './CartItem';
 import Snackbar from '@mui/material/Snackbar';
 import CloseIcon from '@mui/icons-material/Close';
+import Box from '@mui/material/Box';
 
 const DrawerContainer = styled('div')(({ theme }) => {
 	return {
@@ -23,6 +24,13 @@ const DrawerContainer = styled('div')(({ theme }) => {
 		[theme.breakpoints.up('sm')]: {
 			width: '24rem',
 		},
+	};
+});
+
+const CartBottomTextContainer = styled('div')(({ theme }) => {
+	return {
+		display: 'flex',
+		justifyContent: 'space-between',
 	};
 });
 
@@ -50,6 +58,16 @@ export default function CartDrawer() {
 		setToastOpen(false);
 	};
 
+	const getTotalCartPrice = () => {
+		let totalPrice = 0;
+		Object.keys(cartValue).forEach((cartItemID, k) => {
+			const productInfo = data[_.findIndex(data, ['id', cartItemID])];
+			const cartItemCount = cartValue[cartItemID];
+			totalPrice = totalPrice + productInfo.price.value * cartItemCount;
+		});
+		return totalPrice;
+	};
+
 	const action = (
 		<React.Fragment>
 			<IconButton
@@ -73,7 +91,7 @@ export default function CartDrawer() {
 					productInfo={productInfo}
 					count={cartItemCount}
 					id={cartItemID}
-          key={`cart-item-${k}`}
+					key={`cart-item-${k}`}
 				/>
 			);
 		});
@@ -111,9 +129,20 @@ export default function CartDrawer() {
 						size="small"
 						aria-label="close"
 						color="inherit"
-						onClick={handleClose}
+						onClick={toggleDrawer(false)}
+            disableRipple
 					>
 						<CloseIcon fontSize="small" />
+            <Typography
+						
+						title={'Dismiss'}
+						variant="body2"
+						component="span"
+						align="left"
+						
+					>
+						Dismiss
+					</Typography>
 					</IconButton>
 					<Typography
 						gutterBottom
@@ -121,12 +150,40 @@ export default function CartDrawer() {
 						variant="h5"
 						component="div"
 						align="left"
-						sx={{ fontWeight: '700', mt: 5, mb: 2 }}
+						sx={{ fontWeight: '700', mt: 2, mb: 2 }}
 					>
 						My Cart
 					</Typography>
 					{renderCartItems()}
-          <Button sx={{width: '100%'}} variant="contained" color="secondary" size="large" onClick={undefined}>{'Proceed to Checkout'}</Button>
+					<Box sx={{ mt: 5, borderTop: '2px solid grey', p: 2 }}>
+						<CartBottomTextContainer>
+							<Typography variant="h6">Taxes: </Typography>
+							<Typography variant="body1" sx={{ lineHeight: 2 }}>
+								Calculated at checkout
+							</Typography>
+						</CartBottomTextContainer>
+						<CartBottomTextContainer>
+							<Typography variant="h6">Shipping: </Typography>
+							<Typography variant="body1" sx={{ lineHeight: 2 }}>
+								Free
+							</Typography>
+						</CartBottomTextContainer>
+						<CartBottomTextContainer>
+							<Typography variant="h6">Total: </Typography>
+							<Typography variant="body1" sx={{ lineHeight: 2 }}>
+								{`$ ${getTotalCartPrice()}`}
+							</Typography>
+						</CartBottomTextContainer>
+						<Button
+							sx={{ width: '100%' }}
+							variant="contained"
+							color="secondary"
+							size="large"
+							onClick={undefined}
+						>
+							{'Proceed to Checkout'}
+						</Button>
+					</Box>
 				</DrawerContainer>
 			</Drawer>
 			{renderNoItemsInCartToast()}

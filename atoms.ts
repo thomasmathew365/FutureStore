@@ -6,7 +6,7 @@ type ThemeProps = 'light' | 'dark';
 
 export const themeState = atom({
   key: 'themeState',
-  default: 'light' as ThemeProps,
+  default: 'dark' as ThemeProps,
 });
 
 export const cartState = atom({
