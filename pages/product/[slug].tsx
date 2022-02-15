@@ -19,6 +19,7 @@ import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import { Button } from '@mui/material';
+import Skeleton from '@mui/material/Skeleton';
 
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 const Post: NextPage = () => {
@@ -31,7 +32,16 @@ const Post: NextPage = () => {
 	const [selectedColor, setSelectedColor] = React.useState<number>(0);
 	const [selectedSize, setSelectedSize] = React.useState<number>(0);
 	const [cartValue, setCartValue] = useRecoilState(cartState);
+	const [isLoaded, setIsLoaded] = React.useState<boolean>(false);
+
+	React.useEffect(() => {
+		setTimeout(() => {
+			setIsLoaded(true);
+		}, 2000);
+	}, [])
+
 	const theme = useRecoilValue<'light' | 'dark'>(themeState);
+
 	const typoStyles = {
 		color: theme === 'light' ? 'text.primary' : 'common.white',
 		p: 1,
@@ -84,15 +94,21 @@ const Post: NextPage = () => {
 		return data.images.map((image: ImageProps, k: number) => {
 			return (
 				<Grid item xs={4} sm={4} md={4} lg={4} key={k} sx={{ display: 'inline-block' }}>
+					{!isLoaded && <Skeleton sx={{
+						display: 'inline-block',
+						height: 200,
+						width: '100%'
+					}} variant="rectangular" />}
 					<CardMedia
 						component="img"
 						alt={data.name}
-						height="200"
 						image={image.url}
+						height="200"
 						sx={{
 							objectFit: 'contain',
 							bgcolor: k === selectedImage ? '#82ffa1' : '#430089',
-							cursor: 'pointer'
+							cursor: 'pointer',
+							display: !isLoaded ? 'none' : 'inline-block'
 						}}
 						onClick={onImageClick(k)}
 					/>
@@ -148,49 +164,59 @@ const Post: NextPage = () => {
 
 	const renderMainImageBox = () => {
 		return (
-			<Grid item xs={12} sm={12} md={8} sx={{ pt: 0}} >
-				<div style={{ position: 'relative' }}>
-					<CardMedia
-						component="img"
-						alt={data.name}
-						height="545"
-						image={data.images[selectedImage].url}
-						sx={{
-							objectFit: 'contain',
-						}}
-						style={{
-							background: 'linear-gradient(to right bottom, #430089, #82ffa1)',
-						}}
-					/>
-					<Box sx={{ position: 'absolute', bottom: '0' }}>
-						<div>
+			<Grid item xs={12} sm={12} md={8} sx={{ pt: 0 }} >
+				{!isLoaded && <Skeleton sx={{
+					display: 'inline-block',
+					position: 'relative',
+					height: 545,
+					width: '100%'
+				}} variant="rectangular" />}
+				<Box sx={{ display: !isLoaded ? 'none' : 'block' }}>
+
+					<div style={{ position: 'relative' }}>
+						<CardMedia
+							component="img"
+							alt={data.name}
+							height="545"
+							image={data.images[selectedImage].url}
+							sx={{
+								objectFit: 'contain',
+							}}
+							style={{
+								background: 'linear-gradient(to right bottom, #430089, #82ffa1)',
+							}}
+						/>
+						<Box sx={{ position: 'absolute', bottom: '0' }}>
+							<div>
+								<Typography gutterBottom variant="h6" component="div" align="left" sx={{
+									...mainImageTypoStyles,
+								}}>
+									{`$ ${data.price.value}`}
+								</Typography>
+							</div>
 							<Typography gutterBottom variant="h6" component="div" align="left" sx={{
 								...mainImageTypoStyles,
 							}}>
-								{`$ ${data.price.value}`}
+								{`$ ${data.name}`}
 							</Typography>
-						</div>
-						<Typography gutterBottom variant="h6" component="div" align="left" sx={{
-							...mainImageTypoStyles,
-						}}>
-							{`$ ${data.name}`}
-						</Typography>
+						</Box>
+					</div>
+					<Box
+						sx={{
+							display: 'flex',
+							justifyContent: 'flex-end',
+							marginTop: '-80px',
+						}}
+					>
+						<IconButton size="large" color="inherit" onClick={onImagePrevious}>
+							<ChevronLeftIcon sx={{ m: 2, mr: 4 }} />
+						</IconButton>
+						<IconButton size="large" color="inherit" onClick={onImageNext}>
+							<ChevronRightIcon sx={{ m: 2 }} />
+						</IconButton>
 					</Box>
-				</div>
-				<Box
-					sx={{
-						display: 'flex',
-						justifyContent: 'flex-end',
-						marginTop: '-80px',
-					}}
-				>
-					<IconButton size="large" color="inherit" onClick={onImagePrevious}>
-						<ChevronLeftIcon sx={{ m: 2, mr: 4 }} />
-					</IconButton>
-					<IconButton size="large" color="inherit" onClick={onImageNext}>
-						<ChevronRightIcon sx={{ m: 2 }} />
-					</IconButton>
 				</Box>
+
 				<Box sx={{ display: 'flex' }}>
 
 					{renderAltImages()}
@@ -237,7 +263,7 @@ const Post: NextPage = () => {
 
 	const renderProductDetails = () => {
 		return (
-			<Grid item xs={12} sm={12} md={4} sx={{ p: 2}}>
+			<Grid item xs={12} sm={12} md={4} sx={{ p: 2 }}>
 				<Typography gutterBottom variant="h5" component="div" align="left" sx={typoStyles}>
 					{'Color'}
 				</Typography>

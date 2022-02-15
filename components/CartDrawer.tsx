@@ -48,12 +48,12 @@ export default function CartDrawer() {
   const [toastOpen, setToastOpen] = React.useState(false);
   const theme = useRecoilValue<'light' | 'dark'>(themeState);
 
-  React.useEffect(() => {
-    // close drawer when cart's empty
-    if (!Object.keys(cartValue).length) {
-      setIsOpen(false);
-    }
-  }, [cartValue]);
+  // React.useEffect(() => {
+  //   // close drawer when cart's empty
+  //   if (!Object.keys(cartValue).length) {
+  //     setIsOpen(false);
+  //   }
+  // }, [cartValue]);
 
   const handleClick = () => {
     setToastOpen(true);
@@ -131,6 +131,40 @@ export default function CartDrawer() {
     );
   };
 
+  const renderDrawerBottom = () => {
+    return (
+      <Box sx={{ mt: 5, borderTop: '2px solid grey', p: 2 }}>
+        <CartBottomTextContainer>
+          <Typography variant="h6">Taxes: </Typography>
+          <Typography variant="body1" sx={{ lineHeight: 2 }}>
+            Calculated at checkout
+          </Typography>
+        </CartBottomTextContainer>
+        <CartBottomTextContainer>
+          <Typography variant="h6">Shipping: </Typography>
+          <Typography variant="body1" sx={{ lineHeight: 2 }}>
+            Free
+          </Typography>
+        </CartBottomTextContainer>
+        <CartBottomTextContainer>
+          <Typography variant="h6">Total: </Typography>
+          <Typography variant="body1" sx={{ lineHeight: 2 }}>
+            {`$ ${getTotalCartPrice()}`}
+          </Typography>
+        </CartBottomTextContainer>
+        <Button
+          sx={{ width: '100%' }}
+          variant="contained"
+          color="secondary"
+          size="large"
+          onClick={undefined}
+        >
+          {'Proceed to Checkout'}
+        </Button>
+      </Box>
+    );
+  }
+
   return (
     <div>
       {/* <Button onClick={toggleDrawer(true)}>{'anchor'}</Button> */}
@@ -174,35 +208,9 @@ export default function CartDrawer() {
             My Cart
           </Typography>
           {renderCartItems()}
-          <Box sx={{ mt: 5, borderTop: '2px solid grey', p: 2 }}>
-            <CartBottomTextContainer>
-              <Typography variant="h6">Taxes: </Typography>
-              <Typography variant="body1" sx={{ lineHeight: 2 }}>
-                Calculated at checkout
-              </Typography>
-            </CartBottomTextContainer>
-            <CartBottomTextContainer>
-              <Typography variant="h6">Shipping: </Typography>
-              <Typography variant="body1" sx={{ lineHeight: 2 }}>
-                Free
-              </Typography>
-            </CartBottomTextContainer>
-            <CartBottomTextContainer>
-              <Typography variant="h6">Total: </Typography>
-              <Typography variant="body1" sx={{ lineHeight: 2 }}>
-                {`$ ${getTotalCartPrice()}`}
-              </Typography>
-            </CartBottomTextContainer>
-            <Button
-              sx={{ width: '100%' }}
-              variant="contained"
-              color="secondary"
-              size="large"
-              onClick={undefined}
-            >
-              {'Proceed to Checkout'}
-            </Button>
-          </Box>
+          {!Object.keys(cartValue).length ? <Typography variant="h6">The cart is empty. </Typography>
+            : <>{renderDrawerBottom()}</>}
+
         </DrawerContainer>
       </Drawer>
       {renderNoItemsInCartToast()}

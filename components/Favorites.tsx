@@ -9,7 +9,6 @@ import {
   List,
   ListItem,
   ListItemButton,
-  ListItemText,
   Grid,
   ClickAwayListener,
   CardMedia,
@@ -100,6 +99,66 @@ export default function Favorites() {
     );
   };
 
+  const renderFavoritesList = () => {
+    return (
+      <Box sx={favoritesBoxStyles}>
+        {favorites.map((itemID, k) => {
+          const productInfo = data[_.findIndex(data, ['id', itemID])];
+          return (
+            <List key={k}>
+              <ListItem disablePadding>
+                <ListItemButton>
+                  <Grid container spacing={1}>
+                    <Grid item xs={4}>
+                      <Link href={`/product/[slug]`} as={`/product/${productInfo.slug}`}>
+                        <a>
+                          <CardMedia
+                            component="img"
+                            alt={productInfo.name}
+                            height="60"
+                            image={productInfo.images[0].url}
+                            sx={{ bgcolor: '#FFFFFF' }}
+                          />
+                        </a>
+                      </Link>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Link href={`/product/[slug]`} as={`/product/${productInfo.slug}`}>
+                        <a>
+                          <Box sx={{ display: 'flex', alignItems: 'center' }} >
+                            <Typography variant="body2">
+                              {productInfo.name}
+                            </Typography>
+                          </Box>
+                        </a>
+                      </Link>
+                    </Grid>
+                    <Grid item xs={2}>
+                      <IconButton
+                        size="small"
+                        aria-label="close"
+                        color="inherit"
+                        disableRipple
+                        onClick={() => {
+                          const favoriteIndex = favorites.indexOf(productInfo.id);
+                          const tempArray = [...favorites];
+                          tempArray.splice(favoriteIndex, 1)
+                          setFavorites(tempArray);
+                        }}
+                        sx={{ display: 'flex', alignItems: 'center' }}
+                      >
+                        <DeleteIcon fontSize="large" />
+                      </IconButton>
+                    </Grid>
+                  </Grid>
+                </ListItemButton>
+              </ListItem>
+            </List>
+          )
+        })}
+      </Box>
+    );
+  }
 
   return (
     <>
@@ -113,61 +172,7 @@ export default function Favorites() {
         {({ TransitionProps }) => (
           <ClickAwayListener onClickAway={handleClickAway}>
             <Fade {...TransitionProps} timeout={350}>
-              <Box sx={favoritesBoxStyles}>
-                {favorites.map((itemID, k) => {
-                  const productInfo = data[_.findIndex(data, ['id', itemID])];
-                  return (
-                    <List key={k}>
-                      <ListItem disablePadding>
-                        <ListItemButton>
-                          <Grid container spacing={1}>
-                            <Grid item xs={4}>
-                              <Link href={`/product/[slug]`} as={`/product/${productInfo.slug}`}>
-                                <a>
-                                  <CardMedia
-                                    component="img"
-                                    alt={productInfo.name}
-                                    height="60"
-                                    image={productInfo.images[0].url}
-                                    sx={{ bgcolor: '#FFFFFF' }}
-                                  />
-                                </a>
-                              </Link>
-                            </Grid>
-                            <Grid item xs={6}>
-                              <Link href={`/product/[slug]`} as={`/product/${productInfo.slug}`}>
-                                <a>
-                                  <Box >
-                                    <Typography>
-                                      {productInfo.name}
-                                    </Typography>
-                                  </Box>
-                                </a>
-                              </Link>
-                            </Grid>
-                            <Grid item xs={2}>
-                              <IconButton
-                                size="small"
-                                aria-label="close"
-                                color="inherit"
-                                disableRipple
-                                onClick={() => {
-                                  const favoriteIndex = favorites.indexOf(productInfo.id);
-                                  const tempArray = [...favorites];
-                                  tempArray.splice(favoriteIndex, 1)
-                                  setFavorites(tempArray);
-                                }}
-                              >
-                                <DeleteIcon fontSize="small" />
-                              </IconButton>
-                            </Grid>
-                          </Grid>
-                        </ListItemButton>
-                      </ListItem>
-                    </List>
-                  )
-                })}
-              </Box>
+              {renderFavoritesList()}
             </Fade>
           </ClickAwayListener>
         )}
