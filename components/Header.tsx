@@ -8,6 +8,7 @@ import { useRecoilValue } from 'recoil';
 import { themeState } from '../atoms';
 import CartDrawer from './CartDrawer';
 import Favorites from './Favorites';
+import Image from 'next/image';
 
 export default function Header() {
   const theme = useRecoilValue<'light' | 'dark'>(themeState);
@@ -20,7 +21,8 @@ export default function Header() {
           <Link href={`/search`}>
             <a >
               <Box sx={{ color: theme === 'light' ? 'text.primary' : 'common.white' }}>
-                {'Future Store'}
+                <Image sx={{ p: 2 }} src={`/futurestore-logos_${theme === 'light' ? `black` : `white`}.png`} 
+                alt="me" width="140" height="35" />
 
               </Box>
             </a>
