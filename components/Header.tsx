@@ -21,7 +21,7 @@ export default function Header() {
           <Link href={`/search`}>
             <a >
               <Box sx={{ color: theme === 'light' ? 'text.primary' : 'common.white' }}>
-                <Image sx={{ p: 2 }} src={`/futurestore-logos_${theme === 'light' ? `black` : `white`}.png`} 
+                <Image src={`/futurestore-logos_${theme === 'light' ? `black` : `white`}.png`} 
                 alt="me" width="140" height="35" />
 
               </Box>
