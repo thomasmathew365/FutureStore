@@ -60,7 +60,30 @@ export const products = [
     "price": {
       "value": 80,
       "currencyCode": "USD"
-    }
+    },
+    "options": [
+      {
+        "id": 131,
+        "values": [
+          {
+            "label": "Black",
+            "isDefault": false,
+            "hexColors": [
+              "#000000"
+            ]
+          },
+          {
+            "label": "White",
+            "isDefault": false,
+            "hexColors": [
+              "#FFFFFF"
+            ]
+          }
+        ],
+        "__typename": "MultipleChoiceOption",
+        "displayName": "Color"
+      }
+    ]
   },
   {
     "name": "Lightweight Jacket",
@@ -355,7 +378,7 @@ export const products = [
                     "label": "Black",
                     "isDefault": false,
                     "hexColors": [
-                      "#FFFFFF"
+                      "#000000"
                     ]
                   }
                 },
@@ -364,7 +387,7 @@ export const products = [
                     "label": "White",
                     "isDefault": false,
                     "hexColors": [
-                      "#000000"
+                      "#FFFFFF"
                     ]
                   }
                 }
@@ -424,14 +447,14 @@ export const products = [
             "label": "Black",
             "isDefault": false,
             "hexColors": [
-              "#FFFFFF"
+              "#000000"
             ]
           },
           {
             "label": "White",
             "isDefault": false,
             "hexColors": [
-              "#000000"
+              "#FFFFFF"
             ]
           }
         ],
@@ -531,7 +554,7 @@ export const products = [
                     "label": "Black",
                     "isDefault": false,
                     "hexColors": [
-                      "#FFFFFF"
+                      "#000000"
                     ]
                   }
                 },
@@ -540,7 +563,7 @@ export const products = [
                     "label": "White",
                     "isDefault": false,
                     "hexColors": [
-                      "#000000"
+                      "#FFFFFF"
                     ]
                   }
                 }
@@ -559,14 +582,14 @@ export const products = [
             "label": "Black",
             "isDefault": false,
             "hexColors": [
-              "#FFFFFF"
+              "#000000"
             ]
           },
           {
             "label": "White",
             "isDefault": false,
             "hexColors": [
-              "#000000"
+              "#FFFFFF"
             ]
           }
         ],
@@ -1399,7 +1422,7 @@ export const products = [
                     "label": "Black",
                     "isDefault": false,
                     "hexColors": [
-                      "#0D0C0C"
+                      "#000000"
                     ]
                   }
                 },
@@ -1453,7 +1476,7 @@ export const products = [
             "label": "Black",
             "isDefault": false,
             "hexColors": [
-              "#0D0C0C"
+              "#000000"
             ]
           },
           {
@@ -1585,7 +1608,7 @@ export const products = [
                     "label": "Heather Black",
                     "isDefault": false,
                     "hexColors": [
-                      "#1A1818"
+                      "#000000"
                     ]
                   }
                 },
@@ -1639,7 +1662,7 @@ export const products = [
             "label": "Heather Black",
             "isDefault": false,
             "hexColors": [
-              "#1A1818"
+              "#000000"
             ]
           },
           {
@@ -1783,7 +1806,7 @@ export const products = [
                     "label": "Black",
                     "isDefault": false,
                     "hexColors": [
-                      "#0A0A0A"
+                      "#000000"
                     ]
                   }
                 },
@@ -1792,7 +1815,7 @@ export const products = [
                     "label": "White",
                     "isDefault": false,
                     "hexColors": [
-                      "#F8F8F8"
+                      "#FFFFFF"
                     ]
                   }
                 }
@@ -1842,14 +1865,14 @@ export const products = [
             "label": "Black",
             "isDefault": false,
             "hexColors": [
-              "#0A0A0A"
+              "#000000"
             ]
           },
           {
             "label": "White",
             "isDefault": false,
             "hexColors": [
-              "#F8F8F8"
+              "#FFFFFF"
             ]
           }
         ],
@@ -1941,6 +1964,27 @@ export const products = [
     ],
     "productOptions": {
       "edges": [
+
+        {
+          "node": {
+            "__typename": "MultipleChoiceOption",
+            "entityId": 153,
+            "displayName": "Color",
+            "values": {
+              "edges": [
+                {
+                  "node": {
+                    "label": "Gray",
+                    "isDefault": false,
+                    "hexColors": [
+                      "#E6E6E6"
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        },
         {
           "node": {
             "__typename": "MultipleChoiceOption",
@@ -1976,31 +2020,25 @@ export const products = [
               ]
             }
           }
-        },
-        {
-          "node": {
-            "__typename": "MultipleChoiceOption",
-            "entityId": 153,
-            "displayName": "Color",
-            "values": {
-              "edges": [
-                {
-                  "node": {
-                    "label": "Gray",
-                    "isDefault": false,
-                    "hexColors": [
-                      "#E6E6E6"
-                    ]
-                  }
-                }
-              ]
-            }
-          }
         }
       ]
     },
     "id": "127",
     "options": [
+      {
+        "id": 153,
+        "values": [
+          {
+            "label": "Gray",
+            "isDefault": false,
+            "hexColors": [
+              "#E6E6E6"
+            ]
+          }
+        ],
+        "__typename": "MultipleChoiceOption",
+        "displayName": "Color"
+      },
       {
         "id": 133,
         "values": [
@@ -2022,21 +2060,8 @@ export const products = [
         ],
         "__typename": "MultipleChoiceOption",
         "displayName": "Size"
-      },
-      {
-        "id": 153,
-        "values": [
-          {
-            "label": "Gray",
-            "isDefault": false,
-            "hexColors": [
-              "#E6E6E6"
-            ]
-          }
-        ],
-        "__typename": "MultipleChoiceOption",
-        "displayName": "Color"
       }
+
     ],
     "slug": "unisex-joggers",
     "price": {

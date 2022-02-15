@@ -6,9 +6,9 @@ import { useTheme } from '@mui/material/styles';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import {
-	useRecoilState
+  useRecoilState
 } from 'recoil';
-import {themeState} from '../atoms';
+import { themeState } from '../atoms';
 
 
 export default function ToggleColorMode() {
@@ -19,9 +19,9 @@ export default function ToggleColorMode() {
   };
 
   return (
-      <IconButton sx={{ ml: 0 }} onClick={onChange} color="inherit">
-        {themeMUI.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
-      </IconButton>
+    <IconButton sx={{ ml: 0, color: theme === 'light' ? 'text.primary' : 'common.white' }} onClick={onChange} color="inherit">
+      {themeMUI.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+    </IconButton>
   );
 }
 

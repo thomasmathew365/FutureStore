@@ -13,3 +13,8 @@ export const cartState = atom({
   key: 'cartState',
   default: {} as Record<string, number>,
 });
+
+export const favoritesState = atom({
+  key: 'favoritesState',
+  default: [] as string[],
+});

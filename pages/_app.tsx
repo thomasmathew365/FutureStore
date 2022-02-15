@@ -1,7 +1,7 @@
 import '../styles/globals.css';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
-import { useTheme, ThemeProvider, createTheme } from '@mui/material/styles';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 import * as React from 'react';
 import {
 	RecoilRoot,
@@ -9,6 +9,13 @@ import {
 } from 'recoil';
 import { themeState } from '../atoms';
 import Header from '../components/Header';
+import { styled } from '@mui/material/styles';
+
+const Container = styled('div')(({ theme }) => {
+	return ({
+		backgroundColor: theme.palette.mode === 'light' ? theme.palette.background.default : theme.palette.grey['900']
+	})
+});
 
 function MyApp({ Component, pageProps }: AppProps) {
 	return (
@@ -25,19 +32,21 @@ function MyApp({ Component, pageProps }: AppProps) {
 }
 
 function ThemedApp({ children }: any) {
-	const mode = useRecoilValue<'light' | 'dark'>(themeState); 
-  const theme = React.useMemo(
-    () =>
-      createTheme({
-        palette: {
-          mode,
-        },
-      }),
-    [mode],
-  );
+	const mode = useRecoilValue<'light' | 'dark'>(themeState);
+	const theme = React.useMemo(
+		() =>
+			createTheme({
+				palette: {
+					mode,
+				},
+			}),
+		[mode],
+	);
 	return (
 		<ThemeProvider theme={theme}>
-			{children}
+			<Container>
+				{children}
+			</Container>
 		</ThemeProvider>
 	)
 }

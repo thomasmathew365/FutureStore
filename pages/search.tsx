@@ -8,13 +8,8 @@ import {
 	useRecoilValue
 } from 'recoil';
 import { themeState } from '../atoms';
-import { styled } from '@mui/material/styles';
 
-const SearchContainer = styled('div')(({ theme }) => {
-	return ({
-		backgroundColor: theme.palette.mode === 'light' ? theme.palette.background.default : theme.palette.grey['900']
-	})
-});
+
 
 const Products: NextPage = () => {
 
@@ -26,24 +21,19 @@ const Products: NextPage = () => {
 	if (!data) return <div>Loading...</div>
 
 	return (
-		<SearchContainer >
-			<Container maxWidth="xl" sx={{
-				bgcolor: searchScreenBG,
-				p: 5,
-			}}>
-				{data.map((product: ProductProps, k: number) => (
-					// <Link href={`/product/[slug]`} as={`/product/${product.slug}`} key={`searchitem-${k}`}>
-					// 	<a>
-					<Product
-						key={`searchitem-${k}`}
-						details={product}
-					/>
-					// 	</a>
-					// </Link>
+		<Container maxWidth="xl" sx={{
+			p: 5
+		}}>
+			{data.map((product: ProductProps, k: number) => (
 
-				))}
-			</Container>
-		</SearchContainer>
+				<Product
+					key={`searchitem-${k}`}
+					details={product}
+				/>
+
+
+			))}
+		</Container>
 	);
 };
 

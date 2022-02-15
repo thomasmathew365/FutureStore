@@ -46,19 +46,15 @@ const Post: NextPage = () => {
 	};
 	const ProductInfoContainer = styled('div')(({ theme }) => {
 		return {
-			backgroundColor:
-				theme.palette.mode === 'light'
-					? theme.palette.background.default
-					: theme.palette.grey['900'],
-			paddingBottom: '300px'
+			minHeight: '100vh'
 		};
 	});
 
 	if (error) return <div>{error.message}</div>;
 	if (!data) return <div>Loading...</div>;
 
-	const colors = data.options[0].values;
-	const sizes = data.options[1].values;
+	const colors = data?.options[0]?.values;
+	const sizes = data?.options[1]?.values;
 
 	const onImageClick = (key: number) => () => {
 		setSelectedImage(key);
@@ -84,7 +80,6 @@ const Post: NextPage = () => {
 		}
 	};
 
-
 	const renderAltImages = () => {
 		return data.images.map((image: ImageProps, k: number) => {
 			return (
@@ -97,6 +92,7 @@ const Post: NextPage = () => {
 						sx={{
 							objectFit: 'contain',
 							bgcolor: k === selectedImage ? '#82ffa1' : '#430089',
+							cursor: 'pointer'
 						}}
 						onClick={onImageClick(k)}
 					/>
@@ -106,9 +102,10 @@ const Post: NextPage = () => {
 	};
 
 	const renderColors = () => {
-		return colors
+		return colors && colors
 			.map((edge: any, k: number) => {
 				return (<Box
+					key={k}
 					onClick={() => setSelectedColor(k)}
 					sx={{
 						bgcolor: edge.hexColors[0],
@@ -117,7 +114,8 @@ const Post: NextPage = () => {
 						display: 'flex',
 						justifyContent: 'center',
 						alignItems: 'center',
-						cursor: 'pointer'
+						cursor: 'pointer',
+						border: '1px solid black'
 					}} >
 					{selectedColor === k && <DoneIcon
 						sx={{ color: edge.hexColors[0] === '#000000' ? '#FFFFFF' : '#000000' }}
@@ -128,11 +126,11 @@ const Post: NextPage = () => {
 	}
 
 	const renderSizes = () => {
-		return sizes
+		return sizes && sizes
 			.map((edge: any, k: number) => {
 				return (<Box
 					onClick={() => setSelectedSize(k)}
-
+					key={k}
 					sx={{
 						bgcolor: '#000000',
 						m: 2, height: '40px',
@@ -142,118 +140,138 @@ const Post: NextPage = () => {
 						justifyContent: 'center',
 						alignItems: 'center',
 						color: '#FFFFFF',
-						border: selectedSize === k ? `1px solid #fff` : ``
+						border: selectedSize === k ? `1px solid #fff` : ``,
+						cursor: 'pointer'
 					}} >{edge.label}</Box>)
 			})
 	}
 
-	return (
-		<ProductInfoContainer>
-			<Grid container spacing={1} sx={{ mt: 0, pt: 0 }}>
-				<Grid item xs={12} sm={12} md={8} sx={{ pt: 0 }} >
-					<div style={{ position: 'relative' }}>
-						<CardMedia
-							component="img"
-							alt={data.name}
-							height="545"
-							image={data.images[selectedImage].url}
-							sx={{
-								objectFit: 'contain',
-							}}
-							style={{
-								background: 'linear-gradient(to right bottom, #430089, #82ffa1)',
-							}}
-						/>
-						<Box sx={{ position: 'absolute', bottom: '0' }}>
-							<div>
-								<Typography gutterBottom variant="h6" component="div" align="left" sx={{
-									...mainImageTypoStyles,
-								}}>
-									{`$ ${data.price.value}`}
-								</Typography>
-							</div>
+	const renderMainImageBox = () => {
+		return (
+			<Grid item xs={12} sm={12} md={8} sx={{ pt: 0}} >
+				<div style={{ position: 'relative' }}>
+					<CardMedia
+						component="img"
+						alt={data.name}
+						height="545"
+						image={data.images[selectedImage].url}
+						sx={{
+							objectFit: 'contain',
+						}}
+						style={{
+							background: 'linear-gradient(to right bottom, #430089, #82ffa1)',
+						}}
+					/>
+					<Box sx={{ position: 'absolute', bottom: '0' }}>
+						<div>
 							<Typography gutterBottom variant="h6" component="div" align="left" sx={{
 								...mainImageTypoStyles,
 							}}>
-								{`$ ${data.name}`}
+								{`$ ${data.price.value}`}
 							</Typography>
-						</Box>
-					</div>
-					<Box
-						sx={{
-							display: 'flex',
-							justifyContent: 'flex-end',
-							marginTop: '-80px',
-						}}
-					>
-						<IconButton size="large" color="inherit" onClick={onImagePrevious}>
-							<ChevronLeftIcon sx={{ m: 2, mr: 4 }} />
-						</IconButton>
-						<IconButton size="large" color="inherit" onClick={onImageNext}>
-							<ChevronRightIcon sx={{ m: 2 }} />
-						</IconButton>
+						</div>
+						<Typography gutterBottom variant="h6" component="div" align="left" sx={{
+							...mainImageTypoStyles,
+						}}>
+							{`$ ${data.name}`}
+						</Typography>
 					</Box>
+				</div>
+				<Box
+					sx={{
+						display: 'flex',
+						justifyContent: 'flex-end',
+						marginTop: '-80px',
+					}}
+				>
+					<IconButton size="large" color="inherit" onClick={onImagePrevious}>
+						<ChevronLeftIcon sx={{ m: 2, mr: 4 }} />
+					</IconButton>
+					<IconButton size="large" color="inherit" onClick={onImageNext}>
+						<ChevronRightIcon sx={{ m: 2 }} />
+					</IconButton>
+				</Box>
+				<Box sx={{ display: 'flex' }}>
 
 					{renderAltImages()}
-				</Grid>
-				<Grid item xs={12} sm={12} md={4}>
-					<Typography gutterBottom variant="h5" component="div" align="left" sx={typoStyles}>
-						{'Color'}
-					</Typography>
-					<Box sx={{ display: 'flex' }}>
-						{renderColors()}
-					</Box>
-					<Typography gutterBottom variant="h5" component="div" align="left" sx={typoStyles}>
-						{'Size'}
-					</Typography>
-					<Box sx={{ display: 'flex' }}>
-						{renderSizes()}
-					</Box>
-					<Typography gutterBottom variant="body2" component="div" align="left" sx={typoStyles}>
-						<span dangerouslySetInnerHTML={{ __html: data.description }}></span>
-					</Typography>
+				</Box>
+			</Grid>
+		)
+	}
 
-					<Button
-						sx={{ width: '100%', mb: 10, mt: 5 }}
-						variant="contained"
-						color="secondary"
-						size="large"
-						onClick={addToCart(`${data.id}_${colors[selectedColor].label}_${sizes[selectedSize].label}`)}
+	const renderAccordions = () => {
+		return (
+			<>
+				<Accordion sx={{ mb: 5 }} expanded>
+					<AccordionSummary
+						expandIcon={<ExpandMoreIcon />}
+						aria-controls="panel1a-content"
+						id="panel1a-header"
 					>
-						{'Add to Cart'}
-					</Button>
+						<Typography>Care</Typography>
+					</AccordionSummary>
+					<AccordionDetails>
+						<Typography>
+							This is a limited edition production run. Printing starts when the drop ends.
+						</Typography>
+					</AccordionDetails>
+				</Accordion>
 
+				<Accordion expanded>
+					<AccordionSummary
+						expandIcon={<ExpandMoreIcon />}
+						aria-controls="panel1b-content"
+						id="panel1b-header"
+					>
+						<Typography>Details</Typography>
+					</AccordionSummary>
+					<AccordionDetails>
+						<Typography>
+							This is a limited edition production run. Printing starts when the drop ends. Reminder: Bad Boys For Life. Shipping may take 10+ days due to COVID-19.
+						</Typography>
+					</AccordionDetails>
+				</Accordion>
+			</>
+		);
+	}
 
-					<Accordion sx={{ mb: 5 }}>
-						<AccordionSummary
-							expandIcon={<ExpandMoreIcon />}
-							aria-controls="panel1a-content"
-							id="panel1a-header"
-						>
-							<Typography>Care</Typography>
-						</AccordionSummary>
-						<AccordionDetails>
-							<Typography>
-								This is a limited edition production run. Printing starts when the drop ends.
-							</Typography>
-						</AccordionDetails>
-					</Accordion>
+	const renderProductDetails = () => {
+		return (
+			<Grid item xs={12} sm={12} md={4} sx={{ p: 2}}>
+				<Typography gutterBottom variant="h5" component="div" align="left" sx={typoStyles}>
+					{'Color'}
+				</Typography>
+				<Box sx={{ display: 'flex' }}>
+					{renderColors()}
+				</Box>
+				<Typography gutterBottom variant="h5" component="div" align="left" sx={typoStyles}>
+					{sizes && 'Size'}
+				</Typography>
+				<Box sx={{ display: 'flex' }}>
+					{renderSizes()}
+				</Box>
+				<Typography gutterBottom variant="body2" component="div" align="left" sx={typoStyles}>
+					<span dangerouslySetInnerHTML={{ __html: data.description }}></span>
+				</Typography>
+				<Button
+					sx={{ width: '100%', mb: 10, mt: 5 }}
+					variant="contained"
+					color="secondary"
+					size="large"
+					onClick={addToCart(`${data.id}_${colors[selectedColor].label}${sizes ? `_${sizes[selectedSize].label}` : ``}`)}
+				>
+					{'Add to Cart'}
+				</Button>
+				{renderAccordions()}
+			</Grid>
+		);
+	}
 
-					<Accordion>
-						<AccordionSummary
-							expandIcon={<ExpandMoreIcon />}
-							aria-controls="panel1b-content"
-							id="panel1b-header"
-						>
-							<Typography>Details</Typography>
-						</AccordionSummary>
-						<AccordionDetails>
-							<Typography>
-								This is a limited edition production run. Printing starts when the drop ends. Reminder: Bad Boys For Life. Shipping may take 10+ days due to COVID-19.
-							</Typography>
-						</AccordionDetails>
-					</Accordion>
-				</Grid>
+	return (
+		<ProductInfoContainer>
+			<Grid container sx={{ mt: 0, pt: 0 }}>
+				{renderMainImageBox()}
+				{renderProductDetails()}
 			</Grid>
 		</ProductInfoContainer>
 	);

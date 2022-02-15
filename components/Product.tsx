@@ -4,14 +4,13 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { ProductProps, Image as ImageProps } from '../data/products-type';
 import {
 	useRecoilValue,
 	useRecoilState
 } from 'recoil';
-import { themeState, cartState } from '../atoms';
+import { themeState, cartState, favoritesState } from '../atoms';
 import IconButton from '@mui/material/IconButton';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
@@ -50,6 +49,8 @@ export default function Product({ details }: DetailsProps) {
 
 	const theme = useRecoilValue<'light' | 'dark'>(themeState);
 	const [cartValue, setCartValue] = useRecoilState(cartState);
+	const [favorites, setFavorites] = useRecoilState<string[]>(favoritesState);
+
 	const typoStyles = {
 		color: theme === 'light' ? 'text.primary' : 'common.white',
 		bgcolor: theme === 'light' ? 'grey.200' : 'grey.900',
@@ -61,6 +62,10 @@ export default function Product({ details }: DetailsProps) {
 	const addToCart = (product: ProductProps) => {
 		const cartItem = buildCartItem(product, false);
 		setCartValue(setParsedCartState(cartItem, cartValue));
+	}
+
+	const addToFavorites = (product: ProductProps) => () => {
+		setFavorites([...favorites, product.id]);
 	}
 
 	return (
@@ -78,10 +83,12 @@ export default function Product({ details }: DetailsProps) {
 			elevation={5}>
 			<ProductActions>
 				<IconButton size="large" aria-label="Add to Cart" color="inherit"
-					onClick={() => addToCart(details)}>
+					onClick={() => addToCart(details)} >
 					<AddShoppingCartIcon />
 				</IconButton>
-				<IconButton size="large" aria-label="Favorite" color="inherit">
+				<IconButton size="large" aria-label="Favorite" color="inherit"
+					onClick={addToFavorites(details)} 
+					disabled={favorites.indexOf(details.id) !== -1}>
 					<FavoriteIcon />
 				</IconButton>
 			</ProductActions>
@@ -92,9 +99,10 @@ export default function Product({ details }: DetailsProps) {
 						component="img"
 						alt={details.name}
 						height="345"
+						width="345"
 						image={getDefaultImage(details.images)}
 					/>
-					<CardContent sx={{ p: 0 }}>
+					<CardContent sx={{ p: 0, mt: -15 }}>
 						{/* Title */}
 						{renderTrimmerTitle(details.name, typoStyles)}
 						{/* Price */}
