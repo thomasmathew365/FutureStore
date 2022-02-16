@@ -2,7 +2,7 @@ import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import { ProductProps, Image as ImageProps } from '../data/products-type';
+import { ProductProps} from '../data/products-type';
 import {
 	useRecoilValue,
 	useRecoilState

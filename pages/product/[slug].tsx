@@ -103,12 +103,15 @@ const Post: NextPage = () => {
 						component="img"
 						alt={data.name}
 						image={image.url}
-						height="200"
 						sx={{
 							objectFit: 'contain',
 							bgcolor: k === selectedImage ? '#82ffa1' : '#430089',
 							cursor: 'pointer',
-							display: !isLoaded ? 'none' : 'inline-block'
+							display: !isLoaded ? 'none' : 'inline-block',
+							height: "200px",
+							'@media(max-width: 600px)': {
+								height: "100px",
+							}
 						}}
 						onClick={onImageClick(k)}
 					/>
@@ -218,7 +221,6 @@ const Post: NextPage = () => {
 				</Box>
 
 				<Box sx={{ display: 'flex' }}>
-
 					{renderAltImages()}
 				</Box>
 			</Grid>
