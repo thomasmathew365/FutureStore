@@ -18,16 +18,16 @@ const Products: NextPage = () => {
 	if (!data) return <div>Loading...</div>
 
 	return (
-			<Container maxWidth="xl" sx={{
-				p: 1
-			}}>
-				{data.map((product: ProductProps, k: number) => (
-					<Product
-						key={`searchitem-${k}`}
-						details={product}
-					/>
-				))}
-			</Container>
+		<Container maxWidth="xl" align="center" sx={{
+			p: 1
+		}}>
+			{data.map((product: ProductProps, k: number) => (
+				<Product
+					key={`searchitem-${k}`}
+					details={product}
+				/>
+			))}
+		</Container>
 	);
 };
 

@@ -2068,6 +2068,192 @@ export const products = [
       "value": 34,
       "currencyCode": "USD"
     }
-  }
+  },
+  {
+    "name": "Bomber Jacket",
+    "path": "/bomber-jacket/",
+    "brand": null,
+    "description": "<p>Combining durability and style, this bomber jacket is a great addition to any wardrobe. It&rsquo;s a real statement piece that makes even the simplest outfit look fashionable.<br /><br />&bull; 60% cotton, 40% polyester fleece<br />&bull; 7.4 oz/yd&sup2; (250.9 g/m&sup2;)<br />&bull; Ribbed crew neck, waistband, and cuffs<br />&bull; Raglan sleeves <br />&bull; Slash pockets <br />&bull; YKK zipper</p>\n<div class=\"table-responsive dynamic\" data-unit-system=\"imperial\">&nbsp;</div>",
+    "prices": {
+      "price": {
+        "value": 52,
+        "currencyCode": "USD"
+      },
+      "salePrice": null,
+      "retailPrice": null
+    },
+    "images": [
+      {
+        "url": "https://cdn11.bigcommerce.com/s-qfzerv205w/images/stencil/original/products/125/420/mockup-7500e8eb__78586.1601229597.png",
+        "alt": "",
+        "isDefault": false
+      },
+      {
+        "url": "https://cdn11.bigcommerce.com/s-qfzerv205w/images/stencil/original/products/125/422/mockup-f9f4ca3c__03903.1601229599.png",
+        "alt": "",
+        "isDefault": true
+      }
+    ],
+    "variants": [
+      {
+        "id": 227,
+        "options": [],
+        "defaultImage": {
+          "urlOriginal": "https://cdn11.bigcommerce.com/s-qfzerv205w/images/stencil/original/attribute_rule_images/137_source_1601229589.png",
+          "altText": "",
+          "isDefault": true
+        }
+      },
+      {
+        "id": 228,
+        "options": [],
+        "defaultImage": {
+          "urlOriginal": "https://cdn11.bigcommerce.com/s-qfzerv205w/images/stencil/original/attribute_rule_images/138_source_1601229589.png",
+          "altText": "",
+          "isDefault": true
+        }
+      },
+      {
+        "id": 229,
+        "options": [],
+        "defaultImage": {
+          "urlOriginal": "https://cdn11.bigcommerce.com/s-qfzerv205w/images/stencil/original/attribute_rule_images/139_source_1601229590.png",
+          "altText": "",
+          "isDefault": true
+        }
+      },
+      {
+        "id": 232,
+        "options": [],
+        "defaultImage": {
+          "urlOriginal": "https://cdn11.bigcommerce.com/s-qfzerv205w/images/stencil/original/attribute_rule_images/142_source_1601229592.png",
+          "altText": "",
+          "isDefault": true
+        }
+      },
+      {
+        "id": 233,
+        "options": [],
+        "defaultImage": {
+          "urlOriginal": "https://cdn11.bigcommerce.com/s-qfzerv205w/images/stencil/original/attribute_rule_images/143_source_1601229593.png",
+          "altText": "",
+          "isDefault": true
+        }
+      },
+      {
+        "id": 234,
+        "options": [],
+        "defaultImage": {
+          "urlOriginal": "https://cdn11.bigcommerce.com/s-qfzerv205w/images/stencil/original/attribute_rule_images/144_source_1601229593.png",
+          "altText": "",
+          "isDefault": true
+        }
+      }
+    ],
+    "productOptions": {
+      "edges": [
+        {
+          "node": {
+            "__typename": "MultipleChoiceOption",
+            "entityId": 129,
+            "displayName": "Color",
+            "values": {
+              "edges": [
+                {
+                  "node": {
+                    "label": "Heather Black",
+                    "isDefault": false,
+                    "hexColors": [
+                      "#000000"
+                    ]
+                  }
+                },
+                {
+                  "node": {
+                    "label": "Heather Military Green",
+                    "isDefault": false,
+                    "hexColors": [
+                      "#5C6D16"
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "node": {
+            "__typename": "MultipleChoiceOption",
+            "entityId": 130,
+            "displayName": "Size",
+            "values": {
+              "edges": [
+                {
+                  "node": {
+                    "label": "S"
+                  }
+                },
+                {
+                  "node": {
+                    "label": "M"
+                  }
+                },
+                {
+                  "node": {
+                    "label": "L"
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "id": "125",
+    "options": [
+      {
+        "id": 129,
+        "values": [
+          {
+            "label": "Heather Black",
+            "isDefault": false,
+            "hexColors": [
+              "#000000"
+            ]
+          },
+          {
+            "label": "Heather Military Green",
+            "isDefault": false,
+            "hexColors": [
+              "#5C6D16"
+            ]
+          }
+        ],
+        "__typename": "MultipleChoiceOption",
+        "displayName": "Color"
+      },
+      {
+        "id": 130,
+        "values": [
+          {
+            "label": "S"
+          },
+          {
+            "label": "M"
+          },
+          {
+            "label": "L"
+          }
+        ],
+        "__typename": "MultipleChoiceOption",
+        "displayName": "Size"
+      }
+    ],
+    "slug": "bomber-jacket",
+    "price": {
+      "value": 52,
+      "currencyCode": "USD"
+    }
+  },
 ]
 
