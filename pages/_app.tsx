@@ -21,7 +21,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 	return (
 		<RecoilRoot>
 			<Head>
-				<title>My new cool app</title>
+				<title>Future Store</title>
 			</Head>
 			<ThemedApp>
 				<Header />
